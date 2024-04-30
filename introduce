@@ -1,0 +1,51 @@
+# demo micro 
+- Hướng dẫn này áp dụng đối với đối tượng đã có kiến thức về Angular, npm, npx
+# lv1
+## Tạo một cấu trúc dự án mà bên trong nó có nhiều ứng dụng Angular nhỏ ( có thể dùng git submoduel để phát triển song song )
+- npx @angular/cli@17 new Angular_micro_demo --create-application=false
+## Tạo các ứng dụng con
+### Tạo một dự án tổng sẽ load các ứng dụng con bên trong nó
+- npx ng generate application shell
+### Tạo các App con khác
+- npx ng generate application mailbox
+- npx ng generate application calendar
+## turn on Module Federation
+### Sử dụng custom-webpack
+- npm i -D @angular-builders/custom-webpack@17
+### config cổng ( mỗi Angular app sẽ có 1 cổng )
+- config port shell: `architect.serve.options: { port: 4200}`
+- config [architect.serve.options] with `"publicHost": "http://localhost:4200/"`
+- config port mailbox: `architect.serve.options: { port: 4300}`
+- config [architect.serve.options] with `"publicHost": "http://localhost:4300/"`
+- config port calendar: `architect.serve.options: { port: 4400}`
+- config [architect.serve.options] with `"publicHost": "http://localhost:4400/"`
+### 
+- create [webpack.config.js]: ...
+- create [webpack.prod.config.js]: `module.exports = require('./webpack.config');`
+- use [@angular-builders/custom-webpack] instead of [@angular-devkit/build-angular] at [angular.json].[architect.serve] && [architect.build]
+- ues [@angular-builders/custom-webpack:browser] instead of [@angular-builders/custom-webpack:application]
+
+- [architect.build.options]: ` "customWebpackConfig": { "path": "projects/shell/webpack.config.js" }`
+- config [architect.build.options]: `"main": "projects/shell/src/main.ts",`
+- remove config [architect.build.options]: `"browser": "projects/shell/src/main.ts",`
+- [architect.build.configurations.production]: ` "customWebpackConfig": { "path": "projects/shell/webpack.prod.config.js" }`
+
+
+- [bootstrap.ts] : `platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.error(err));`
+- [main.ts] : `import('./bootstrap').catch(err => console.error(err));`
+
+- [app.module.ts]: bootrap + BrowserModule
+- [types.d.ts]: `declare module 'mailbox/MailboxModule'; declare module 'calendar/CalendarModule';` 
+# NOTE
+- all config happens in  [architect]
+
+# lv2
+## use remote entry
+- remove config [webpack.config.js]
+-  ng g @angular-architects/module-federation:init --project master-app --port 4200 --type host  
+-  ng g @angular-architects/module-federation:init --project pm --port 4400 --type remote  
+-  ng g @angular-architects/module-federation:init --project hrm --port 4300 --type remote  
+- instead of [@angular-builders/custom-webpack]: auto
+- remove config [architect.build.configurations.production]: ` "customWebpackConfig": { "path": "projects/shell/webpack.prod.config.js" }`
+- remove config [BrowserModule] instead of [CommonModule]
+- create folder [remote-entry] + [mf.manifest.json] + re config [main.ts]
