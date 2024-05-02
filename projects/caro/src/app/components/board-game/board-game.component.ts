@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './board-game.component.scss'
 })
 export class BoardGameComponent {
-
+  
 }
