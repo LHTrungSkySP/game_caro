@@ -1,16 +1,9 @@
 <div>
-  <!-- row 1  -->
-  <div class="row">
-    <!-- col 1 -->
-    <div class="cell"></div>
-    <!-- col 2 -->
-    <div class="cell"></div>
-  </div>
-    <!-- row 2  -->
-  <div class="row">
-    <!-- col 1 -->
-    <div class="cell"></div>
-    <!-- col 2 -->
-    <div class="cell"></div>
-  </div>
+  @for (row of board; track row.id; let idx_row = $index) {
+    <div id="{{row.id}}" class="row">
+      @for (cell of row.cells; track cell.id; let idx_col = $index){
+        <div (click)="markCell(idx_row,idx_col)" id="{{cell.id}}" class="cell">{{cell.value}}</div>
+      }
+    </div>
+  }
 </div>

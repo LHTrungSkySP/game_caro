@@ -1,17 +1,21 @@
-.cell{
+.cell {
   width: 30px;
   height: 30px;
   border-right: 1px black solid;
   background-color: aqua;
   display: inline-block;
+  align-content: center;
+  text-align: center;
 }
-.row{
+
+.row {
   border: 1px black solid;
   border-right: 0;
   border-bottom: 0;
   display: flex;
   width: fit-content;
 }
-.row:last-child{
+
+.row:last-child {
   border-bottom: 1px black solid;
 }
