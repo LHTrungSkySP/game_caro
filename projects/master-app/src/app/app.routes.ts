@@ -6,7 +6,7 @@ export const routes: Routes = [
         path: 'admin',
         loadChildren: () => loadRemoteModule({
             type: 'module',
-            remoteEntry: 'http://localhost:4300/remoteEntry.js',
+            remoteEntry: 'http://localhost:5300/remoteEntry.js',
             exposedModule: './Module'
         }).then(m => m.RemoteEntryModule)
     },
@@ -14,7 +14,7 @@ export const routes: Routes = [
         path: 'game',
         loadChildren: () => loadRemoteModule({
             type: 'module',
-            remoteEntry: 'http://localhost:4400/remoteEntry.js',
+            remoteEntry: 'http://localhost:5400/remoteEntry.js',
             exposedModule: './Module'
         }).then(m => m.RemoteEntryModule)
     },
