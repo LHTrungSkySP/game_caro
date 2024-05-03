@@ -2,10 +2,10 @@ const { shareAll, withModuleFederationPlugin } = require('@angular-architects/mo
 
 module.exports = withModuleFederationPlugin({
 
-  remotes: {
-    "admin": "http://localhost:5300/remoteEntry.js",
-    "game": "http://localhost:5400/remoteEntry.js",
-    "caro": "http://localhost:4500/remoteEntry.js",
+  name: 'caro',
+
+  exposes: {
+    './Module': './projects/caro/src/app/app.module.ts',
   },
 
   shared: {

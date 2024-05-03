@@ -74,8 +74,8 @@
 					},
 					"defaultConfiguration": "development",
 					"options": {
-						"port": 4200,
-						"publicHost": "http://localhost:4200",
+						"port": 5200,
+						"publicHost": "http://localhost:5200",
 						"extraWebpackConfig": "projects/master-app/webpack.config.js"
 					}
 				},
@@ -178,8 +178,8 @@
 					},
 					"defaultConfiguration": "development",
 					"options": {
-						"port": 4300,
-						"publicHost": "http://localhost:4300",
+						"port": 5300,
+						"publicHost": "http://localhost:5300",
 						"extraWebpackConfig": "projects/admin/webpack.config.js"
 					}
 				},
@@ -282,8 +282,8 @@
 					},
 					"defaultConfiguration": "development",
 					"options": {
-						"port": 4400,
-						"publicHost": "http://localhost:4400",
+						"port": 5400,
+						"publicHost": "http://localhost:5400",
 						"extraWebpackConfig": "projects/game/webpack.config.js"
 					}
 				},
@@ -314,6 +314,113 @@
 					}
 				}
 			}
+		},
+		"caro": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
+			},
+			"root": "projects/caro",
+			"sourceRoot": "projects/caro/src",
+			"prefix": "app",
+			"architect": {
+				"build": {
+					"builder": "ngx-build-plus:browser",
+					"options": {
+						"outputPath": "dist/caro",
+						"index": "projects/caro/src/index.html",
+						"polyfills": [
+							"zone.js"
+						],
+						"tsConfig": "projects/caro/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							"projects/caro/src/favicon.ico",
+							"projects/caro/src/assets"
+						],
+						"styles": [
+							"projects/caro/src/styles.scss"
+						],
+						"scripts": [],
+						"main": "projects/caro/src/main.ts",
+						"extraWebpackConfig": "projects/caro/webpack.config.js",
+						"commonChunk": false
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"outputHashing": "all",
+							"extraWebpackConfig": "projects/caro/webpack.prod.config.js"
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "ngx-build-plus:dev-server",
+					"configurations": {
+						"production": {
+							"buildTarget": "caro:build:production",
+							"extraWebpackConfig": "projects/caro/webpack.prod.config.js"
+						},
+						"development": {
+							"buildTarget": "caro:build:development"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4500,
+						"publicHost": "http://localhost:4500",
+						"extraWebpackConfig": "projects/caro/webpack.config.js"
+					}
+				},
+				"extract-i18n": {
+					"builder": "ngx-build-plus:extract-i18n",
+					"options": {
+						"buildTarget": "caro:build",
+						"extraWebpackConfig": "projects/caro/webpack.config.js"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						],
+						"tsConfig": "projects/caro/tsconfig.spec.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							"projects/caro/src/favicon.ico",
+							"projects/caro/src/assets"
+						],
+						"styles": [
+							"projects/caro/src/styles.scss"
+						],
+						"scripts": []
+					}
+				}
+			}
 		}
-	}
+  },
+  "cli": {
+    "analytics": false
+  }
 }

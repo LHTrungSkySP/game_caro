@@ -1,0 +1,12 @@
+<div>
+  @for (row of board; track row.id; let idx_row = $index) {
+    <div id="{{row.id}}" class="row">
+      @for (cell of row.cells; track cell.id; let idx_col = $index){
+        <div (click)="markCell(idx_row,idx_col)" id="{{cell.id}}" class="cell"
+        [class.text-cyan-600]="cell.playerNo === 1"
+        [class.text-red-600]="cell.playerNo === 2"
+        >{{cell.value}}</div>
+      }
+    </div>
+  }
+</div>
