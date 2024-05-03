@@ -11,6 +11,8 @@ export class BoardGameComponent implements OnInit {
   NUMBER_ROW: number = 25;
   NUMBER_COL: number = 25;
 
+  NUMBER_WIN: number = 5;
+
   board: Row[] = [];
 
   playerCurrent = 1;
@@ -47,36 +49,83 @@ export class BoardGameComponent implements OnInit {
         this.playerCurrent = 1;
       }
       this.board[y].cells[x].playerNo = this.playerCurrent;
-      this.checkWin(x,y,this.playerCurrent);
+      this.checkWin(x, y, this.playerCurrent, this.board);
     }
   }
-  checkWin(x: number, y: number, playerNo: number) {
-    // check dọc
-    /// check trên
-    let count = 1;
-    for (let idx = 1; count !== 5; idx++) {
-      if (this.board[y + idx].cells[x].playerNo === playerNo) {
-        count++;
-      }
-      else{
-        break;
-      }
-    }
-    /// check dưới
-    for (let idx = 1; count !== 5; idx++) {
-      if (this.board[y - idx].cells[x].playerNo === playerNo) {
-        count++;
-      }
-      else{
-        break;
-      }
-    }
-    if(count === 5){
-      alert(playerNo + " win");
-    }
+  checkWin(x: number, y: number, playerNo: number, board: any) {
+    this.checkWinCol(x, y, playerNo, board);
+    this.checkWinRow(x, y, playerNo, board);
+    this.checkWinCrossLeft(x, y, playerNo, board);
+    this.checkWinCrossRight(x, y, playerNo, board);
     // check chéo
-    /// check nghiêng phải
     /// check nghiêng trái
+  }
+  checkWinCrossLeft(x: number, y: number, playerNo: number, board: any) {
+    // check ngang
+    let count = 1;
+    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
+      if (this.conditionCheckWin(x - idx, y + idx, playerNo, board)) { /// check top
+        count++;
+      }
+      if (this.conditionCheckWin(x + idx, y - idx, playerNo, board)) { /// check bottom
+        count++;
+      }
+      if (!this.conditionCheckWin(x - idx, y + idx, playerNo, board) && !this.conditionCheckWin(x + idx, y - idx, playerNo, board)) {
+        break;
+      }
+      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+    }
+  }
+  checkWinCrossRight(x: number, y: number, playerNo: number, board: any) {
+    // check ngang
+    let count = 1;
+    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
+      if (this.conditionCheckWin(x + idx, y + idx, playerNo, board)) { /// check trái
+        count++;
+      }
+      if (this.conditionCheckWin(x - idx, y - idx, playerNo, board)) { /// check phải
+        count++;
+      }
+      if (!this.conditionCheckWin(x - idx, y - idx, playerNo, board) && !this.conditionCheckWin(x + idx, y + idx, playerNo, board)) {
+        break;
+      }
+      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+    }
+  }
+  checkWinRow(x: number, y: number, playerNo: number, board: any) {
+    // check ngang
+    let count = 1;
+    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
+      if (this.conditionCheckWin(x - idx, y, playerNo, board)) { /// check trái
+        count++;
+      }
+      if (this.conditionCheckWin(x + idx, y, playerNo, board)) { /// check phải
+        count++;
+      }
+      if (!this.conditionCheckWin(x - idx, y, playerNo, board) && !this.conditionCheckWin(x + idx, y, playerNo, board)) {
+        break;
+      }
+      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+    }
+  }
+  checkWinCol(x: number, y: number, playerNo: number, board: any) {
+    // check dọc
+    let count = 1;
+    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
+      if (this.conditionCheckWin(x, y + idx, playerNo, board)) { /// check trên
+        count++;
+      }
+      if (this.conditionCheckWin(x, y - idx, playerNo, board)) { /// check dưới
+        count++;
+      }
+      if (!this.conditionCheckWin(x, y + idx, playerNo, board) && !this.conditionCheckWin(x, y - idx, playerNo, board)) {
+        break;
+      }
+      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+    }
+  }
+  conditionCheckWin(x: number, y: number, playerNo: number, board: any) {
+    return board[y].cells[x].playerNo === playerNo;
   }
 }
 type Cell = {
