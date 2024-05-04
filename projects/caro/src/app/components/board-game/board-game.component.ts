@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Constants } from '../../shared/constants/constants'
 import { Row } from '../../shared/models/row';
 import { Cell } from '../../shared/models/cell';
@@ -13,33 +13,44 @@ import { Cell } from '../../shared/models/cell';
 export class BoardGameComponent implements OnInit {
   @ViewChild('boardContainer', { static: true }) boardContainer!: ElementRef;
 
-  numberWin: number = 5;
+  @Input() levelGame = Constants.GAME_LEVEL.EASY;
+  gameSize = Constants.GAME_SIZE_EASY;
+  style: any;
+
+  numberWin: number = Constants.NUMBER_WIN.EASY;
 
   board: Row[] = [];
-  widthOfCell: string = '';
 
   playerCurrent = 1;
 
-  levelGame = Constants.GAME_LEVEL.EASY;
-  gameSize = Constants.GAME_SIZE_EASY;
+
+
   constructor() {
+  }
+  ngOnInit() {
+    console.log(this.levelGame);
     if (this.levelGame === Constants.GAME_LEVEL.EASY) {
       this.gameSize = Constants.GAME_SIZE_EASY;
-      this.numberWin = 3;
+      this.numberWin = Constants.NUMBER_WIN.EASY;
     }
     else if (this.levelGame === Constants.GAME_LEVEL.NORMAL) {
       this.gameSize = Constants.GAME_SIZE_NORMAL;
-      this.numberWin = 5;
+      this.numberWin = Constants.NUMBER_WIN.NORMAL;
     }
-    else if (this.levelGame === Constants.GAME_LEVEL.HARD){
+    else if (this.levelGame === Constants.GAME_LEVEL.HARD) {
       this.gameSize = Constants.GAME_SIZE_HARD;
-      this.numberWin = 5;
+      this.numberWin = Constants.NUMBER_WIN.HARD;
     }
-  }
-  ngOnInit() {
     this.board = this.initBoard(this.gameSize, this.gameSize);
     let width = this.boardContainer.nativeElement.offsetWidth;
-    this.widthOfCell = width / this.gameSize + 'px';
+    this.style = {
+      'width': width / this.gameSize + 'px',
+      'height': width / this.gameSize + 'px',
+      'font-size': width / (this.gameSize * 2) + 'px'
+    }
+  }
+  ngAfterViewInit(){
+    
   }
   initBoard(number_row: number, number_col: number) {
     let board = [];
@@ -60,7 +71,6 @@ export class BoardGameComponent implements OnInit {
     return board;
   }
   markCell(y: number, x: number) {
-    console
     if (!this.board[y].cells[x].playerNo) { // chưa ai đánh
       if (this.playerCurrent === 1) {
         this.board[y].cells[x].value = 'X';
@@ -79,20 +89,12 @@ export class BoardGameComponent implements OnInit {
     this.checkWinRow(x, y, playerNo, board);
     this.checkWinCrossLeft(x, y, playerNo, board);
     this.checkWinCrossRight(x, y, playerNo, board);
-    // check chéo
-    /// check nghiêng trái
   }
 
   checkWinCrossLeft(x: number, y: number, playerNo: number, board: any) {
-    // check ngang
     let count = 1;
     for (let idx = 1; count !== this.numberWin; idx++) {
-      if (this.conditionCheckWin(x - idx, y + idx, playerNo, board)) { /// check top
-        count++;
-      }
-      if (this.conditionCheckWin(x + idx, y - idx, playerNo, board)) { /// check bottom
-        count++;
-      }
+      count += this.conditionCheckWin(x - idx, y + idx, playerNo, board) + this.conditionCheckWin(x + idx, y - idx, playerNo, board);
       if (!this.conditionCheckWin(x - idx, y + idx, playerNo, board) && !this.conditionCheckWin(x + idx, y - idx, playerNo, board)) {
         break;
       }
@@ -100,15 +102,9 @@ export class BoardGameComponent implements OnInit {
     }
   }
   checkWinCrossRight(x: number, y: number, playerNo: number, board: any) {
-    // check ngang
     let count = 1;
     for (let idx = 1; count !== this.numberWin; idx++) {
-      if (this.conditionCheckWin(x + idx, y + idx, playerNo, board)) { /// check trái
-        count++;
-      }
-      if (this.conditionCheckWin(x - idx, y - idx, playerNo, board)) { /// check phải
-        count++;
-      }
+      count += this.conditionCheckWin(x + idx, y + idx, playerNo, board) + this.conditionCheckWin(x - idx, y - idx, playerNo, board);
       if (!this.conditionCheckWin(x - idx, y - idx, playerNo, board) && !this.conditionCheckWin(x + idx, y + idx, playerNo, board)) {
         break;
       }
@@ -116,15 +112,9 @@ export class BoardGameComponent implements OnInit {
     }
   }
   checkWinRow(x: number, y: number, playerNo: number, board: any) {
-    // check ngang
     let count = 1;
     for (let idx = 1; count !== this.numberWin; idx++) {
-      if (this.conditionCheckWin(x - idx, y, playerNo, board)) { /// check trái
-        count++;
-      }
-      if (this.conditionCheckWin(x + idx, y, playerNo, board)) { /// check phải
-        count++;
-      }
+      count += this.conditionCheckWin(x - idx, y, playerNo, board) + this.conditionCheckWin(x + idx, y, playerNo, board);
       if (!this.conditionCheckWin(x - idx, y, playerNo, board) && !this.conditionCheckWin(x + idx, y, playerNo, board)) {
         break;
       }
@@ -132,15 +122,9 @@ export class BoardGameComponent implements OnInit {
     }
   }
   checkWinCol(x: number, y: number, playerNo: number, board: any) {
-    // check dọc
     let count = 1;
     for (let idx = 1; count !== this.numberWin; idx++) {
-      if (this.conditionCheckWin(x, y + idx, playerNo, board)) { /// check trên
-        count++;
-      }
-      if (this.conditionCheckWin(x, y - idx, playerNo, board)) { /// check dưới
-        count++;
-      }
+      count += this.conditionCheckWin(x, y + idx, playerNo, board) + this.conditionCheckWin(x, y - idx, playerNo, board);
       if (!this.conditionCheckWin(x, y + idx, playerNo, board) && !this.conditionCheckWin(x, y - idx, playerNo, board)) {
         break;
       }
@@ -148,12 +132,11 @@ export class BoardGameComponent implements OnInit {
     }
   }
   conditionCheckWin(x: number, y: number, playerNo: number, board: any) {
-    try{
+    try {
       let t = board[y].cells[x].playerNo === playerNo;
-      return t;
-    }catch(e){
-      console.log(x,y,playerNo,board );
-      return ;
+      return Number(t);
+    } catch (e) {
+      return 0;
     }
   }
 }
