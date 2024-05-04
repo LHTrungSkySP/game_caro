@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Constants } from '../../shared/constants/constants'
+import { Row } from '../../shared/models/row';
+import { Cell } from '../../shared/models/cell';
 
 @Component({
   selector: 'app-board-game',
@@ -8,17 +11,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './board-game.component.scss'
 })
 export class BoardGameComponent implements OnInit {
-  NUMBER_ROW: number = 25;
-  NUMBER_COL: number = 25;
+  @ViewChild('boardContainer', { static: true }) boardContainer!: ElementRef;
 
-  NUMBER_WIN: number = 5;
+  numberWin: number = 5;
 
   board: Row[] = [];
+  widthOfCell: string = '';
 
   playerCurrent = 1;
-  constructor() { }
+
+  levelGame = Constants.GAME_LEVEL.EASY;
+  gameSize = Constants.GAME_SIZE_EASY;
+  constructor() {
+    if (this.levelGame === Constants.GAME_LEVEL.EASY) {
+      this.gameSize = Constants.GAME_SIZE_EASY;
+      this.numberWin = 3;
+    }
+    else if (this.levelGame === Constants.GAME_LEVEL.NORMAL) {
+      this.gameSize = Constants.GAME_SIZE_NORMAL;
+      this.numberWin = 5;
+    }
+    else if (this.levelGame === Constants.GAME_LEVEL.HARD){
+      this.gameSize = Constants.GAME_SIZE_HARD;
+      this.numberWin = 5;
+    }
+  }
   ngOnInit() {
-    this.board = this.initBoard(this.NUMBER_ROW, this.NUMBER_COL);
+    this.board = this.initBoard(this.gameSize, this.gameSize);
+    let width = this.boardContainer.nativeElement.offsetWidth;
+    this.widthOfCell = width / this.gameSize + 'px';
   }
   initBoard(number_row: number, number_col: number) {
     let board = [];
@@ -39,6 +60,7 @@ export class BoardGameComponent implements OnInit {
     return board;
   }
   markCell(y: number, x: number) {
+    console
     if (!this.board[y].cells[x].playerNo) { // chưa ai đánh
       if (this.playerCurrent === 1) {
         this.board[y].cells[x].value = 'X';
@@ -60,10 +82,11 @@ export class BoardGameComponent implements OnInit {
     // check chéo
     /// check nghiêng trái
   }
+
   checkWinCrossLeft(x: number, y: number, playerNo: number, board: any) {
     // check ngang
     let count = 1;
-    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
+    for (let idx = 1; count !== this.numberWin; idx++) {
       if (this.conditionCheckWin(x - idx, y + idx, playerNo, board)) { /// check top
         count++;
       }
@@ -73,13 +96,13 @@ export class BoardGameComponent implements OnInit {
       if (!this.conditionCheckWin(x - idx, y + idx, playerNo, board) && !this.conditionCheckWin(x + idx, y - idx, playerNo, board)) {
         break;
       }
-      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+      if (count === this.numberWin) alert(playerNo + " win");
     }
   }
   checkWinCrossRight(x: number, y: number, playerNo: number, board: any) {
     // check ngang
     let count = 1;
-    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
+    for (let idx = 1; count !== this.numberWin; idx++) {
       if (this.conditionCheckWin(x + idx, y + idx, playerNo, board)) { /// check trái
         count++;
       }
@@ -89,13 +112,13 @@ export class BoardGameComponent implements OnInit {
       if (!this.conditionCheckWin(x - idx, y - idx, playerNo, board) && !this.conditionCheckWin(x + idx, y + idx, playerNo, board)) {
         break;
       }
-      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+      if (count === this.numberWin) alert(playerNo + " win");
     }
   }
   checkWinRow(x: number, y: number, playerNo: number, board: any) {
     // check ngang
     let count = 1;
-    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
+    for (let idx = 1; count !== this.numberWin; idx++) {
       if (this.conditionCheckWin(x - idx, y, playerNo, board)) { /// check trái
         count++;
       }
@@ -105,13 +128,13 @@ export class BoardGameComponent implements OnInit {
       if (!this.conditionCheckWin(x - idx, y, playerNo, board) && !this.conditionCheckWin(x + idx, y, playerNo, board)) {
         break;
       }
-      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+      if (count === this.numberWin) alert(playerNo + " win");
     }
   }
   checkWinCol(x: number, y: number, playerNo: number, board: any) {
     // check dọc
     let count = 1;
-    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
+    for (let idx = 1; count !== this.numberWin; idx++) {
       if (this.conditionCheckWin(x, y + idx, playerNo, board)) { /// check trên
         count++;
       }
@@ -121,21 +144,16 @@ export class BoardGameComponent implements OnInit {
       if (!this.conditionCheckWin(x, y + idx, playerNo, board) && !this.conditionCheckWin(x, y - idx, playerNo, board)) {
         break;
       }
-      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+      if (count === this.numberWin) alert(playerNo + " win");
     }
   }
   conditionCheckWin(x: number, y: number, playerNo: number, board: any) {
-    return board[y].cells[x].playerNo === playerNo;
+    try{
+      let t = board[y].cells[x].playerNo === playerNo;
+      return t;
+    }catch(e){
+      console.log(x,y,playerNo,board );
+      return ;
+    }
   }
-}
-type Cell = {
-  id: number,
-  x: number,
-  y: number,
-  value: string,
-  playerNo: number | null
-}
-type Row = {
-  id: number,
-  cells: Cell[]
 }
