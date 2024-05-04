@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Constants } from '../../shared/constants/constants'
+import { Row } from '../../shared/models/row';
+import { Cell } from '../../shared/models/cell';
 
 @Component({
   selector: 'app-board-game',
@@ -8,17 +11,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './board-game.component.scss'
 })
 export class BoardGameComponent implements OnInit {
-  NUMBER_ROW: number = 25;
-  NUMBER_COL: number = 25;
+  @ViewChild('boardContainer', { static: true }) boardContainer!: ElementRef;
 
-  NUMBER_WIN: number = 5;
+  @Input() levelGame = Constants.GAME_LEVEL.EASY;
+  gameSize = Constants.GAME_SIZE_EASY;
+  style: any;
+
+  numberWin: number = Constants.NUMBER_WIN.EASY;
 
   board: Row[] = [];
 
   playerCurrent = 1;
-  constructor() { }
+
+
+
+  constructor() {
+  }
   ngOnInit() {
-    this.board = this.initBoard(this.NUMBER_ROW, this.NUMBER_COL);
+    console.log(this.levelGame);
+    if (this.levelGame === Constants.GAME_LEVEL.EASY) {
+      this.gameSize = Constants.GAME_SIZE_EASY;
+      this.numberWin = Constants.NUMBER_WIN.EASY;
+    }
+    else if (this.levelGame === Constants.GAME_LEVEL.NORMAL) {
+      this.gameSize = Constants.GAME_SIZE_NORMAL;
+      this.numberWin = Constants.NUMBER_WIN.NORMAL;
+    }
+    else if (this.levelGame === Constants.GAME_LEVEL.HARD) {
+      this.gameSize = Constants.GAME_SIZE_HARD;
+      this.numberWin = Constants.NUMBER_WIN.HARD;
+    }
+    this.board = this.initBoard(this.gameSize, this.gameSize);
+    let width = this.boardContainer.nativeElement.offsetWidth;
+    this.style = {
+      'width': width / this.gameSize + 'px',
+      'height': width / this.gameSize + 'px',
+      'font-size': width / (this.gameSize * 2) + 'px'
+    }
+  }
+  ngAfterViewInit(){
+    
   }
   initBoard(number_row: number, number_col: number) {
     let board = [];
@@ -57,85 +89,54 @@ export class BoardGameComponent implements OnInit {
     this.checkWinRow(x, y, playerNo, board);
     this.checkWinCrossLeft(x, y, playerNo, board);
     this.checkWinCrossRight(x, y, playerNo, board);
-    // check chéo
-    /// check nghiêng trái
   }
+
   checkWinCrossLeft(x: number, y: number, playerNo: number, board: any) {
-    // check ngang
     let count = 1;
-    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
-      if (this.conditionCheckWin(x - idx, y + idx, playerNo, board)) { /// check top
-        count++;
-      }
-      if (this.conditionCheckWin(x + idx, y - idx, playerNo, board)) { /// check bottom
-        count++;
-      }
+    for (let idx = 1; count !== this.numberWin; idx++) {
+      count += this.conditionCheckWin(x - idx, y + idx, playerNo, board) + this.conditionCheckWin(x + idx, y - idx, playerNo, board);
       if (!this.conditionCheckWin(x - idx, y + idx, playerNo, board) && !this.conditionCheckWin(x + idx, y - idx, playerNo, board)) {
         break;
       }
-      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+      if (count === this.numberWin) alert(playerNo + " win");
     }
   }
   checkWinCrossRight(x: number, y: number, playerNo: number, board: any) {
-    // check ngang
     let count = 1;
-    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
-      if (this.conditionCheckWin(x + idx, y + idx, playerNo, board)) { /// check trái
-        count++;
-      }
-      if (this.conditionCheckWin(x - idx, y - idx, playerNo, board)) { /// check phải
-        count++;
-      }
+    for (let idx = 1; count !== this.numberWin; idx++) {
+      count += this.conditionCheckWin(x + idx, y + idx, playerNo, board) + this.conditionCheckWin(x - idx, y - idx, playerNo, board);
       if (!this.conditionCheckWin(x - idx, y - idx, playerNo, board) && !this.conditionCheckWin(x + idx, y + idx, playerNo, board)) {
         break;
       }
-      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+      if (count === this.numberWin) alert(playerNo + " win");
     }
   }
   checkWinRow(x: number, y: number, playerNo: number, board: any) {
-    // check ngang
     let count = 1;
-    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
-      if (this.conditionCheckWin(x - idx, y, playerNo, board)) { /// check trái
-        count++;
-      }
-      if (this.conditionCheckWin(x + idx, y, playerNo, board)) { /// check phải
-        count++;
-      }
+    for (let idx = 1; count !== this.numberWin; idx++) {
+      count += this.conditionCheckWin(x - idx, y, playerNo, board) + this.conditionCheckWin(x + idx, y, playerNo, board);
       if (!this.conditionCheckWin(x - idx, y, playerNo, board) && !this.conditionCheckWin(x + idx, y, playerNo, board)) {
         break;
       }
-      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+      if (count === this.numberWin) alert(playerNo + " win");
     }
   }
   checkWinCol(x: number, y: number, playerNo: number, board: any) {
-    // check dọc
     let count = 1;
-    for (let idx = 1; count !== this.NUMBER_WIN; idx++) {
-      if (this.conditionCheckWin(x, y + idx, playerNo, board)) { /// check trên
-        count++;
-      }
-      if (this.conditionCheckWin(x, y - idx, playerNo, board)) { /// check dưới
-        count++;
-      }
+    for (let idx = 1; count !== this.numberWin; idx++) {
+      count += this.conditionCheckWin(x, y + idx, playerNo, board) + this.conditionCheckWin(x, y - idx, playerNo, board);
       if (!this.conditionCheckWin(x, y + idx, playerNo, board) && !this.conditionCheckWin(x, y - idx, playerNo, board)) {
         break;
       }
-      if (count === this.NUMBER_WIN) alert(playerNo + " win");
+      if (count === this.numberWin) alert(playerNo + " win");
     }
   }
   conditionCheckWin(x: number, y: number, playerNo: number, board: any) {
-    return board[y].cells[x].playerNo === playerNo;
+    try {
+      let t = board[y].cells[x].playerNo === playerNo;
+      return Number(t);
+    } catch (e) {
+      return 0;
+    }
   }
-}
-type Cell = {
-  id: number,
-  x: number,
-  y: number,
-  value: string,
-  playerNo: number | null
-}
-type Row = {
-  id: number,
-  cells: Cell[]
 }
