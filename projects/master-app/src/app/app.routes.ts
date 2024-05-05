@@ -19,7 +19,7 @@ export const routes: Routes = [
         }).then(m => m.RemoteEntryModule)
     },
     {
-        path: 'caro',
+        path: '',
         loadChildren: () => loadRemoteModule({
             type: 'module',
             remoteEntry: 'http://localhost:4500/remoteEntry.js',
