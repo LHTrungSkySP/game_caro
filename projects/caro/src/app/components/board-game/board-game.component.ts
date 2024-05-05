@@ -24,9 +24,7 @@ export class BoardGameComponent implements OnInit {
   playerCurrent = 1;
   winCells: any[] = [];
 
-
-
-
+  isEndGame: boolean = false;
 
   constructor() {
   }
@@ -81,22 +79,24 @@ export class BoardGameComponent implements OnInit {
   }
   cellCurrent: any;
   markCell(y: number, x: number, ele: any) {
-    if (this.cellCurrent) {
-      this.cellCurrent.style.backgroundColor = '';
-    }
-    this.cellCurrent = ele.target;
-    this.cellCurrent.style.backgroundColor = 'var(--blue-100)';
-    if (!this.board[y].cells[x].playerNo) { // chưa ai đánh
-      this.board[y].cells[x].playerNo = this.playerCurrent;
-      this.winCells = [this.board[y].cells[x]];
-      this.checkWin(x, y, this.playerCurrent, this.board)
-      if (this.playerCurrent === 1) {
-        this.board[y].cells[x].value = 'X';
-        this.playerCurrent = 2;
+    if(!this.isEndGame){
+      if (this.cellCurrent) {
+        this.cellCurrent.style.backgroundColor = '';
       }
-      else if (this.playerCurrent === 2) {
-        this.board[y].cells[x].value = 'O';
-        this.playerCurrent = 1;
+      this.cellCurrent = ele.target;
+      this.cellCurrent.style.backgroundColor = 'var(--blue-100)';
+      if (!this.board[y].cells[x].playerNo) { // chưa ai đánh
+        this.board[y].cells[x].playerNo = this.playerCurrent;
+        this.winCells = [this.board[y].cells[x]];
+        this.checkWin(x, y, this.playerCurrent, this.board)
+        if (this.playerCurrent === 1) {
+          this.board[y].cells[x].value = 'X';
+          this.playerCurrent = 2;
+        }
+        else if (this.playerCurrent === 2) {
+          this.board[y].cells[x].value = 'O';
+          this.playerCurrent = 1;
+        }
       }
     }
   }
@@ -118,7 +118,8 @@ export class BoardGameComponent implements OnInit {
       console.log('checkWinCrossRight', this.winCells)
     }
     else return;
-    this.setColorWinCell(this.winCells)
+    this.setColorWinCell(this.winCells);
+    this.isEndGame = true;
   }
   checkWinCrossRight(x: number, y: number, playerNo: number, board: any) {
     let count = 1;
