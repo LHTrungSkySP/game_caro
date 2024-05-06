@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Constants } from '../../shared/constants/constants';
 @Component({
   selector: 'app-countdown-timer',
   standalone: true,
@@ -8,22 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './countdown-timer.component.scss'
 })
 export class CountdownTimerComponent implements OnInit {
+  @Input() status = true;
+  @Output() notiEndTime = new EventEmitter();
 
-  minutes!: number;
-  seconds!: number;
+  minutes: number = Constants.GAME_TIME.EASY;
+  seconds: number = 0;
   intervalId: any;
 
   constructor() { }
 
   ngOnInit(): void {
-    // Thiết lập thời gian ban đầu (2 phút)
-    this.minutes = 2;
-    this.seconds = 0;
 
-    // Cập nhật đồng hồ đếm ngược mỗi giây
-    this.intervalId = setInterval(() => {
-      this.updateCountdown();
-    }, 1000);
+  }
+  ngOnChanges(){
+    if(this.status){
+      this.startCountdown();
+    } else {
+      this.stopCountdown();
+    }
   }
 
   ngOnDestroy(): void {
@@ -44,6 +46,15 @@ export class CountdownTimerComponent implements OnInit {
     // Kiểm tra nếu thời gian đã hết
     if (this.minutes === 0 && this.seconds === 0) {
       clearInterval(this.intervalId); // Dừng đồng hồ đếm ngược
+      this.notiEndTime.emit();
     }
+  }
+  stopCountdown(){
+    clearInterval(this.intervalId);
+  }
+  startCountdown(){
+    this.intervalId = setInterval(() => {
+      this.updateCountdown();
+    }, 1000);
   }
 }

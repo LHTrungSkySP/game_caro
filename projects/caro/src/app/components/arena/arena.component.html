@@ -1,21 +1,25 @@
 <div class="flex">
-  <div class="w-3 justify-content-center flex">
-    <div class="w-10">
-      <app-box-info [playerNo]="1" [playerId]="1"></app-box-info>
+  <div class="w-5 flex flex-column align-items-center">
+    <div #generalInfo class="w-12 flex justify-content-evenly">
+      <div [class.border-red-400]="timerPlay_X"
+        class="align-items-center flex-column border-3 flex border-round surface-ground">
+        <app-box-info [playerNo]="1" [playerId]="1"></app-box-info>
+        <app-countdown-timer class="mb-2" [status]="timerPlay_X"></app-countdown-timer>
+      </div>
+      <div [class.border-red-400]="timerPlay_O"
+        class="align-items-center flex-column flex border-3 border-round surface-ground">
+        <app-box-info [playerNo]="2" [playerId]="2"></app-box-info>
+        <app-countdown-timer class="mb-2" [status]="timerPlay_O"></app-countdown-timer>
+      </div>
+    </div>
+    <div class="w-12 mt-5">
+      <app-box-chat></app-box-chat>
     </div>
   </div>
-  <div class="w-6 flex flex-column align-items-center">
-    <div class="w-full flex justify-content-around">
-      <app-countdown-timer></app-countdown-timer>
-      <app-countdown-timer></app-countdown-timer>
-    </div>
-    <div class="w-10">
-      <app-board-game [levelGame]="2"></app-board-game>
+  <div class="w-7 flex flex-column align-items-center">
+    <div class="w-9">
+      <app-board-game (endGame)="endGame()" (player)="handleCountDown()" [levelGame]="2"></app-board-game>
     </div>
   </div>
-  <div class="w-3 justify-content-center flex">
-    <div class="w-10">
-      <app-box-info [playerNo]="2" [playerId]="2"></app-box-info>
-    </div>
-  </div>
+
 </div>

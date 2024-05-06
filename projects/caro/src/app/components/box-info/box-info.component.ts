@@ -26,7 +26,8 @@ const playerO = {
   playerNo: 1,
   winRate: 50,
   rank: 124,
-  battleNumber: 53
+  battleNumber: 53,
+  avatar: 'https://lh3.googleusercontent.com/ytP9VP86DItizVX2YNA-xTYzV09IS7rh4WexVp7eilIcfHmm74B7odbcwD5DTXmL0PF42i2wnRKSFPBHlmSjCblWHDCD2oD1oaM1CGFcSd48VBKJfsCi4bS170PKxGwji8CPmehwPw=w200-h247-no'
 }
 
 const playerX = {
@@ -34,5 +35,6 @@ const playerX = {
   playerNo: 2,
   winRate: 50,
   rank: 124,
-  battleNumber: 53
+  battleNumber: 53,
+  avatar: 'https://lh3.googleusercontent.com/pZwZJ5HIL5iKbA91UGMUIPR0VJWa3K0vOGzDZmY6wU3EJBUdfsby3VEyxU162XxTyOyP3D154tjkr-4Jgcx8lygYUR8eB-jVmld4dsHi1c-mE_A8jKccseAG7bdEwVrcuuk6ciNtSw=s170-no'
 }
