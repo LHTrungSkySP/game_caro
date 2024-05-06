@@ -1,25 +1,27 @@
-<div class="card">
-  <img
-    src="https://lh3.googleusercontent.com/ytP9VP86DItizVX2YNA-xTYzV09IS7rh4WexVp7eilIcfHmm74B7odbcwD5DTXmL0PF42i2wnRKSFPBHlmSjCblWHDCD2oD1oaM1CGFcSd48VBKJfsCi4bS170PKxGwji8CPmehwPw=w200-h247-no"
-    alt="Person" class="card__image">
-  <p class="card__name"></p>
-  <div class="grid-container">
-    <div class="grid-child-posts">
-      Win: {{playerInfo.winRate}}%
+<div class="card h-18rem surface-ground">
+  <div class="flex flex-column align-items-center">
+    <div>
+      <img
+      src="https://lh3.googleusercontent.com/ytP9VP86DItizVX2YNA-xTYzV09IS7rh4WexVp7eilIcfHmm74B7odbcwD5DTXmL0PF42i2wnRKSFPBHlmSjCblWHDCD2oD1oaM1CGFcSd48VBKJfsCi4bS170PKxGwji8CPmehwPw=w200-h247-no"
+      alt="Person" class="card__image h-5rem w-5rem">
     </div>
-    <div class="grid-child-followers">
-      Rank: {{playerInfo.rank}} 
+    <div class="flex">
+      <div class="w-4">
+        Win {{playerInfo.winRate}} %
+      </div>
+      <div class="w-4">
+        Rank {{playerInfo.rank}}
+      </div>
+      <div class="w-4">
+        Battles {{playerInfo.battleNumber}}
+      </div>
     </div>
-    <div class="grid-child-followers">
-      Battles: {{playerInfo.battleNumber}} 
-    </div>
+    <ul class="social-icons">
+      <li><a href="#"><i class="pi pi-facebook bg-cyan-600" style="font-size: 2rem"></i></a></li>
+      <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+      <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+      <li><a href="#"><i class="fa fa-codepen"></i></a></li>
+    </ul>
+    <button class="btn draw-border p-2">Follow</button>
   </div>
-  <ul class="social-icons">
-    <li><a href="#"><i class="pi pi-facebook bg-cyan-600" style="font-size: 2rem"></i></a></li>
-    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-    <li><a href="#"><i class="fa fa-codepen"></i></a></li>
-  </ul>
-  <button class="btn draw-border">Follow</button>
-  <button class="btn draw-border">Message</button>
 </div>

@@ -1,7 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'primeflex/primeflex.scss';
 @import 'primeflex/themes/primeone-light.scss';
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
 // @import 'primeflex/themes/primeone-dark.scss';
-.w-50rem{
-    width: 45rem;
+.w-50rem {
+  width: 45rem;
+}
+
+.family-orbitron {
+  font-family: Orbitron;
 }
