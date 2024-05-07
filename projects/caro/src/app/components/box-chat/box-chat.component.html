@@ -1,0 +1,19 @@
+<div class="h-full p-2 pb-0 border-3 border-round border-400">
+    <div class="overflow-auto" [style]="'height: calc(100vh - ' + 500 + 'px)'"
+        (scroll)="onScroll($event.target,'pass')">
+        <div class="relative">
+            @for (item of dataMess; track $index) {
+            <div class="container">
+                <img src="{{item.avatar}}" alt="Avatar" [class.right]="item.playerNo===2" style="width:100%;">
+                <p>{{item.content}}</p>
+                <span [class.time-right]="item.playerNo===1" [class.time-left]="item.playerNo===2"
+                    class="time-right">{{item.time}}</span>
+            </div>
+            }
+        </div>
+    </div>
+    <div class="h-2rem bg-gray-400 py-2 flex justify-content-evenly">
+        <input class="border-round" pInputText type="text" style="padding: 6px; width: 75%; border: unset;outline: unset;">
+        <button class="px-5 bg-blue-200 border-round border-blue-200" >Send</button>
+    </div>
+</div>

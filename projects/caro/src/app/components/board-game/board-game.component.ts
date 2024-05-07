@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Constants } from '../../shared/constants/constants'
 import { Row } from '../../shared/models/row';
 import { Cell } from '../../shared/models/cell';
@@ -14,10 +14,14 @@ export class BoardGameComponent implements OnInit {
   @ViewChild('boardContainer', { static: true }) boardContainer!: ElementRef;
 
   @Input() levelGame = Constants.GAME_LEVEL.EASY;
+
+  @Output() player = new EventEmitter();
+  @Output() endGame = new EventEmitter<string>();
   gameSize = Constants.GAME_SIZE_EASY;
   style: any;
 
   numberWin: number = Constants.NUMBER_WIN.EASY;
+  cellCurrent: any;
 
   board: Row[] = [];
 
@@ -49,10 +53,6 @@ export class BoardGameComponent implements OnInit {
       'font-size': width / (this.gameSize * 2) + 'px'
     }
   }
-  ngAfterViewInit() {
-
-  }
-
   setColorWinCell(winCells: any[]) {
     for (let idx = 0; idx < winCells.length; idx++) {
       this.boardContainer.nativeElement.querySelector('div[id="' + winCells[idx].id + '"].cell').style.backgroundColor = 'var(--blue-100)';
@@ -77,7 +77,6 @@ export class BoardGameComponent implements OnInit {
     }
     return board;
   }
-  cellCurrent: any;
   markCell(y: number, x: number, ele: any) {
     if(!this.isEndGame){
       if (this.cellCurrent) {
@@ -87,7 +86,6 @@ export class BoardGameComponent implements OnInit {
       this.cellCurrent.style.backgroundColor = 'var(--blue-100)';
       if (!this.board[y].cells[x].playerNo) { // chưa ai đánh
         this.board[y].cells[x].playerNo = this.playerCurrent;
-        this.winCells = [this.board[y].cells[x]];
         this.checkWin(x, y, this.playerCurrent, this.board)
         if (this.playerCurrent === 1) {
           this.board[y].cells[x].value = 'X';
@@ -98,9 +96,11 @@ export class BoardGameComponent implements OnInit {
           this.playerCurrent = 1;
         }
       }
+      this.player.emit();
     }
   }
   checkWin(x: number, y: number, playerNo: number, board: any) {
+    this.winCells = [this.board[y].cells[x]];
     if (this.checkWinCol(x, y, playerNo, board)) {
       alert('checkWinCol ' + this.playerCurrent);
       console.log(this.winCells)
@@ -117,10 +117,15 @@ export class BoardGameComponent implements OnInit {
       alert('checkWinCrossRight ' + this.playerCurrent);
       console.log('checkWinCrossRight', this.winCells)
     }
-    else return;
+    else{
+      this.winCells = [];
+      return;
+    } 
     this.setColorWinCell(this.winCells);
     this.isEndGame = true;
+    this.endGame.emit();
   }
+
   checkWinCrossRight(x: number, y: number, playerNo: number, board: any) {
     let count = 1;
     for (let idx = 1; count !== this.numberWin; idx++) {

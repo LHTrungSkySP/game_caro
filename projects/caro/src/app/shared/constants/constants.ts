@@ -14,4 +14,10 @@ export class Constants {
     NORMAL: 1,
     HARD: 2
   };
+
+  public static readonly GAME_TIME = {
+    EASY: 3,
+    NORMAL: 10,
+    HARD: 15
+  }
 }
