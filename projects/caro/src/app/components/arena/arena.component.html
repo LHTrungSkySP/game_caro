@@ -1,34 +1,24 @@
 <div class="flex">
   <div class="w-5 flex flex-column align-items-center">
     <div #generalInfo class="w-12 flex justify-content-evenly">
-      <div class="align-items-center flex-column flex border-1">
+      <div [class.border-red-400]="timerPlay_X"
+        class="align-items-center flex-column border-3 flex border-round surface-ground">
         <app-box-info [playerNo]="1" [playerId]="1"></app-box-info>
-        <app-countdown-timer [status]="timerPlay_X"></app-countdown-timer>
+        <app-countdown-timer class="mb-2" [status]="timerPlay_X"></app-countdown-timer>
       </div>
-      <div class="align-items-center flex-column flex">
+      <div [class.border-red-400]="timerPlay_O"
+        class="align-items-center flex-column flex border-3 border-round surface-ground">
         <app-box-info [playerNo]="2" [playerId]="2"></app-box-info>
-        <app-countdown-timer  [status]="timerPlay_O"></app-countdown-timer>
+        <app-countdown-timer class="mb-2" [status]="timerPlay_O"></app-countdown-timer>
       </div>
     </div>
-    <div class="w-12 flex justify-content-center">
-      <div class="w-4 card border-round p-3 ml-3 pb-0">
-        <div class="my-2">
-          <div class="text-900 font-semibold text-lg mb-3">Hoạt động đã qua</div>
-          <div class="overflow-auto" [style]="'height: calc(100vh - ' + 320 + 'px)'"
-            (scroll)="onScroll($event.target,'pass')">
-            <!-- <div class="relative">
-              @for (item of items; track $index) {
-
-              }
-            </div> -->
-          </div>
-        </div>
-      </div>
+    <div class="w-12 mt-5">
+      <app-box-chat></app-box-chat>
     </div>
   </div>
   <div class="w-7 flex flex-column align-items-center">
     <div class="w-9">
-      <app-board-game (player)="handleCountDown()" [levelGame]="2"></app-board-game>
+      <app-board-game (endGame)="endGame()" (player)="handleCountDown()" [levelGame]="2"></app-board-game>
     </div>
   </div>
 

@@ -16,6 +16,7 @@ export class BoardGameComponent implements OnInit {
   @Input() levelGame = Constants.GAME_LEVEL.EASY;
 
   @Output() player = new EventEmitter();
+  @Output() endGame = new EventEmitter<string>();
   gameSize = Constants.GAME_SIZE_EASY;
   style: any;
 
@@ -85,7 +86,6 @@ export class BoardGameComponent implements OnInit {
       this.cellCurrent.style.backgroundColor = 'var(--blue-100)';
       if (!this.board[y].cells[x].playerNo) { // chưa ai đánh
         this.board[y].cells[x].playerNo = this.playerCurrent;
-        this.winCells = [this.board[y].cells[x]];
         this.checkWin(x, y, this.playerCurrent, this.board)
         if (this.playerCurrent === 1) {
           this.board[y].cells[x].value = 'X';
@@ -100,6 +100,7 @@ export class BoardGameComponent implements OnInit {
     }
   }
   checkWin(x: number, y: number, playerNo: number, board: any) {
+    this.winCells = [this.board[y].cells[x]];
     if (this.checkWinCol(x, y, playerNo, board)) {
       alert('checkWinCol ' + this.playerCurrent);
       console.log(this.winCells)
@@ -116,10 +117,15 @@ export class BoardGameComponent implements OnInit {
       alert('checkWinCrossRight ' + this.playerCurrent);
       console.log('checkWinCrossRight', this.winCells)
     }
-    else return;
+    else{
+      this.winCells = [];
+      return;
+    } 
     this.setColorWinCell(this.winCells);
     this.isEndGame = true;
+    this.endGame.emit();
   }
+
   checkWinCrossRight(x: number, y: number, playerNo: number, board: any) {
     let count = 1;
     for (let idx = 1; count !== this.numberWin; idx++) {
