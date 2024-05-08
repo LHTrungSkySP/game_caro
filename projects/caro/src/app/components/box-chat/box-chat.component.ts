@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-box-chat',
   standalone: true,
   imports: [
+    CommonModule,
     InputTextModule,
     ButtonModule
   ],

@@ -9,8 +9,8 @@ import { BoxChatComponent } from '../box-chat/box-chat.component';
   selector: 'app-arena',
   standalone: true,
   imports: [
-    BoardGameComponent, 
-    BoxInfoComponent, 
+    BoardGameComponent,
+    BoxInfoComponent,
     CountdownTimerComponent,
     BoxChatComponent
   ],
