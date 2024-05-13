@@ -1,7 +1,13 @@
 import { loadRemoteEntry, loadRemoteModule } from '@angular-architects/module-federation';
 import { Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
+    
+    {
+        path: 'login',
+        component: LoginComponent
+    },
     {
         path: 'admin',
         loadChildren: () => loadRemoteModule({
@@ -25,5 +31,6 @@ export const routes: Routes = [
             remoteEntry: 'http://localhost:4500/remoteEntry.js',
             exposedModule: './Module'
         }).then(m => m.AppModule)
-    }
+    },
+
 ];

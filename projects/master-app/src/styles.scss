@@ -3,15 +3,58 @@
 @import 'primeflex/themes/primeone-light.scss';
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --mau1: #00A9FF;
+  --mau2: #30b7fa;
+  --mau3: #65d6f8;
+  --mau4: #90e8fa;
+  --mau5: #89CFF3;
+  --mau6: #c2f1ff;
+  --mau7: #daf7fd;
+}
+
 // @import 'primeflex/themes/primeone-dark.scss';
 body {
   font-family: var(--font-family);
   font-weight: 400;
   color: var(--text-color);
-  padding: 0;
+  padding: 1rem;
   margin: 0;
-  min-height: 100%;
-  background: var(--surface-ground);
+  min-height: 100vh;
+  background: var(--mau6);
+}
+
+.mau1 {
+  background-color: var(--mau1)!important;
+}
+
+.mau2 {
+  background-color: var(--mau2)!important;
+}
+
+.mau3 {
+  background-color: var(--mau3)!important;
+}
+
+.mau4 {
+  background-color: var(--mau4)!important;
+}
+
+.mau5 {
+  background-color: var(--mau5)!important;
+}
+.mau6 {
+  background-color: var(--mau6)!important;
+}
+
+.mau7 {
+  background-color: var(--mau7)!important;
 }
 
 .w-50rem {
@@ -42,6 +85,42 @@ h5 {
   margin: 0;
 }
 
+.h-1 {
+  height: 8.3333%;
+}
+.h-2 {
+  height: 16.6667%;
+}
+.h-3 {
+  height: 25%;
+}
+.h-4 {
+  height: 33.3333%;
+}
+.h-5 {
+  height: 41.6667%;
+}
+.h-6 {
+  height: 50%;
+}
+.h-7 {
+  height: 58.3333%;
+}
+.h-8 {
+  height: 66.6667%;
+}
+.h-9 {
+  height: 75%;
+}
+.h-10 {
+  height: 83.3333%;
+}
+.h-11 {
+  height: 91.6667%;
+}
+.h-12 {
+  height: 100%;
+}
 
 
 
