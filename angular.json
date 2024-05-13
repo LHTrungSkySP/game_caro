@@ -418,9 +418,113 @@
 					}
 				}
 			}
+		},
+		"authentication": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
+			},
+			"root": "projects/authentication",
+			"sourceRoot": "projects/authentication/src",
+			"prefix": "app",
+			"architect": {
+				"build": {
+					"builder": "ngx-build-plus:browser",
+					"options": {
+						"outputPath": "dist/authentication",
+						"index": "projects/authentication/src/index.html",
+						"polyfills": [
+							"zone.js"
+						],
+						"tsConfig": "projects/authentication/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							"projects/authentication/src/favicon.ico",
+							"projects/authentication/src/assets"
+						],
+						"styles": [
+							"projects/authentication/src/styles.scss"
+						],
+						"scripts": [],
+						"main": "projects/authentication/src/main.ts",
+						"extraWebpackConfig": "projects/authentication/webpack.config.js",
+						"commonChunk": false
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"outputHashing": "all",
+							"extraWebpackConfig": "projects/authentication/webpack.prod.config.js"
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "ngx-build-plus:dev-server",
+					"configurations": {
+						"production": {
+							"buildTarget": "authentication:build:production",
+							"extraWebpackConfig": "projects/authentication/webpack.prod.config.js"
+						},
+						"development": {
+							"buildTarget": "authentication:build:development"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 5500,
+						"publicHost": "http://localhost:5500",
+						"extraWebpackConfig": "projects/authentication/webpack.config.js"
+					}
+				},
+				"extract-i18n": {
+					"builder": "ngx-build-plus:extract-i18n",
+					"options": {
+						"buildTarget": "authentication:build",
+						"extraWebpackConfig": "projects/authentication/webpack.config.js"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						],
+						"tsConfig": "projects/authentication/tsconfig.spec.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							"projects/authentication/src/favicon.ico",
+							"projects/authentication/src/assets"
+						],
+						"styles": [
+							"projects/authentication/src/styles.scss"
+						],
+						"scripts": []
+					}
+				}
+			}
 		}
-  },
-  "cli": {
-    "analytics": false
-  }
+	},
+	"cli": {
+		"analytics": false
+	}
 }
