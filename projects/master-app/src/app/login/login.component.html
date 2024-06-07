@@ -1,25 +1,49 @@
-
 <!-- <h4>Child Routes Result</h4>
     <router-outlet></router-outlet> -->
-    <div class="card flex flex-wrap gap-3">
-        <div class="p-2 border-1 surface-border border-round w-15rem" pDroppable (onDrop)="drop(this.fullList,this.targetList)">
-            <ul class="list-none flex flex-column gap-2 p-0 m-0">
-                <li 
-                    *ngFor="let product of fullList" 
-                    class="p-2 border-round shadow-1"
-                    pDraggable 
-                    (onDragStart)="dragStart(product)" 
-                    (onDragEnd)="dragEnd()">
-                        {{product.name}}
-                </li>
-            </ul>
-        </div>
-        <div class="p-2 border-1 surface-border border-round w-15rem" pDroppable pDraggable (onDrop)="drop(this.targetList,this.fullList)">
-            <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="targetList" >
-                <li *ngFor="let product of targetList" class="p-2 border-round shadow-1" (onDragStart)="dragStart(product)" 
+<div class="card flex flex-wrap gap-3">
+    <div class="p-2 border-1 border-red-900 border-round w-15rem">
+        <ul class="list-none flex flex-column gap-2 p-0 m-0">
+            <li *ngFor="let item of listSource.items" class="p-2 border-round shadow-1" 
+                pDroppable 
+                (onDrop)="drop(listSource.id, item, listTemp)" 
+                pDraggable
+                (onDragStart)="dragStart(item,listSource.id)"
                 (onDragEnd)="dragEnd()">
-                    {{product.name}}
-                </li>
-            </ul>
-        </div>
+                {{item.name}}
+            </li>
+            <li *ngIf="listSource.items.length <= 3" (onDrop)="drop(listSource.id, null, listTemp)" pDroppable>
+                Thêm thông tin
+            </li>
+        </ul>
     </div>
+    <div class="p-2 border-1 border-red-900 border-round w-15rem">
+        <ul class="list-none flex flex-column gap-2 p-0 m-0">
+            <li *ngFor="let item of listTarget.items" class="p-2 border-round shadow-1" 
+                pDroppable 
+                (onDrop)="drop(listTarget.id, item, listTemp)" 
+                pDraggable
+                (onDragStart)="dragStart(item,listTarget.id)"
+                (onDragEnd)="dragEnd()">
+                {{item.name}}
+            </li>
+            <li *ngIf="listTarget.items.length <= 3" (onDrop)="drop(listTarget.id, null, listTemp)" pDroppable>
+                Thêm thông tin
+            </li>
+        </ul>
+    </div>
+    <div class="p-2 border-1 border-red-900 border-round w-15rem">
+        <ul class="list-none flex flex-column gap-2 p-0 m-0">
+            <li *ngFor="let item of listTargetB.items" class="p-2 border-round shadow-1" 
+                pDroppable 
+                (onDrop)="drop(listTargetB.id, item, listTemp)" 
+                pDraggable
+                (onDragStart)="dragStart(item,listTargetB.id)"
+                (onDragEnd)="dragEnd()">
+                {{item.name}}
+            </li>
+            <li *ngIf="listTargetB.items.length <= 3" (onDrop)="drop(listTargetB.id, null, listTemp)" pDroppable>
+                Thêm thông tin
+            </li>
+        </ul>
+    </div>
+</div>
