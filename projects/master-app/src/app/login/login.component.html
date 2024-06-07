@@ -1,3 +1,25 @@
 
-<h4>Child Routes Result</h4>
-    <router-outlet></router-outlet>
+<!-- <h4>Child Routes Result</h4>
+    <router-outlet></router-outlet> -->
+    <div class="card flex flex-wrap gap-3">
+        <div class="p-2 border-1 surface-border border-round w-15rem" pDroppable (onDrop)="drop(this.fullList,this.targetList)">
+            <ul class="list-none flex flex-column gap-2 p-0 m-0">
+                <li 
+                    *ngFor="let product of fullList" 
+                    class="p-2 border-round shadow-1"
+                    pDraggable 
+                    (onDragStart)="dragStart(product)" 
+                    (onDragEnd)="dragEnd()">
+                        {{product.name}}
+                </li>
+            </ul>
+        </div>
+        <div class="p-2 border-1 surface-border border-round w-15rem" pDroppable pDraggable (onDrop)="drop(this.targetList,this.fullList)">
+            <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="targetList" >
+                <li *ngFor="let product of targetList" class="p-2 border-round shadow-1" (onDragStart)="dragStart(product)" 
+                (onDragEnd)="dragEnd()">
+                    {{product.name}}
+                </li>
+            </ul>
+        </div>
+    </div>
