@@ -1,49 +1,58 @@
-<!-- <h4>Child Routes Result</h4>
-    <router-outlet></router-outlet> -->
-<div class="card flex flex-wrap gap-3">
-    <div class="p-2 border-1 border-red-900 border-round w-15rem">
-        <ul class="list-none flex flex-column gap-2 p-0 m-0">
-            <li *ngFor="let item of listSource.items" class="p-2 border-round shadow-1" 
-                pDroppable 
-                (onDrop)="drop(listSource.id, item, listTemp)" 
-                pDraggable
-                (onDragStart)="dragStart(item,listSource.id)"
-                (onDragEnd)="dragEnd()">
-                {{item.name}}
-            </li>
-            <li *ngIf="listSource.items.length <= 3" (onDrop)="drop(listSource.id, null, listTemp)" pDroppable>
-                Thêm thông tin
-            </li>
-        </ul>
+<div class="flex h-screen">
+    <div class="w-full lg:w-4 h-full text-center px-6 py-6 flex flex-column justify-content-between">
+        <div class="h-10rem"></div>
+        <div class="flex flex-column align-items-center gap-4">
+            <div class="mb-3">
+                <h2>Đăng nhập</h2>
+                <p>Nếu bạn chưa có tài khoản vui lòng
+                    <a href="" class="text-primary hover:underline cursor-pointer font-medium">
+                        Tạo tài khoản
+                    </a>
+                </p>
+            </div>
+            <input class="w-20rem border-round" pInputText type="email" placeholder="Email">
+            <input class="p-component p-element w-20rem" pInputText type="password" placeholder="Mật khẩu">
+            <div class="w-20rem flex justify-content-end">
+                <a href="" class="text-primary hover:underline cursor-pointer font-medium">
+                    Quên mật khẩu
+                </a>
+
+            </div>
+            <p-button class="w-20rem" label="Đăng nhập"></p-button>
+        </div>
+        <p class="text-color-secondary font-semibold">
+            Nếu có vấn đề xảy ra,
+            <a href="" class="text-primary hover:underline cursor-pointer font-medium">Click vào đây </a>
+            để chúng tôi có thể giúp đỡ bạn
+        </p>
     </div>
-    <div class="p-2 border-1 border-red-900 border-round w-15rem">
-        <ul class="list-none flex flex-column gap-2 p-0 m-0">
-            <li *ngFor="let item of listTarget.items" class="p-2 border-round shadow-1" 
-                pDroppable 
-                (onDrop)="drop(listTarget.id, item, listTemp)" 
-                pDraggable
-                (onDragStart)="dragStart(item,listTarget.id)"
-                (onDragEnd)="dragEnd()">
-                {{item.name}}
-            </li>
-            <li *ngIf="listTarget.items.length <= 3" (onDrop)="drop(listTarget.id, null, listTemp)" pDroppable>
-                Thêm thông tin
-            </li>
-        </ul>
+    <div style="background-image: url('https://diamond.primeng.org/assets/demo/images/auth/bg-login.jpg');"
+        class="w-8 hidden lg:flex flex-column justify-content-between align-items-center px-6 py-6 bg-cover bg-norepeat">
+        <div class="mt-auto mb-auto">
+            <span class="block text-white text-7xl font-semibold">
+                Sáng tạo bất
+                <br>
+                cứ thứ gì mà bạn cho rằng
+                <br>
+                nó sẽ đem lại lợi ích cho sản phẩm của bạn
+            </span>
+            <span class="block text-white text-3xl mt-4">
+                Không chỉ là trò chơi của chúng tôi
+                <br>
+                Cung cấp dịch vụ nhanh chóng hiệu quả
+                <br>
+                Sẵn sàng đồng hành cũng sản phẩm của các bạn
+            </span>
+        </div>
+        <div class="flex align-items-center gap-5">
+        </div>
+        <div class="flex align-items-center gap-5">
+            <span class="text-white font-semibold">
+                Theo dõi chúng tôi qua các cổng thông tin sau
+            </span>
+            <i class="pi pi-github text-3xl p-1 surface-overlay border-circle cursor-pointer"></i>
+            <i class="pi pi-twitter text-3xl p-1 surface-overlay border-circle cursor-pointer"></i>
+        </div>
     </div>
-    <div class="p-2 border-1 border-red-900 border-round w-15rem">
-        <ul class="list-none flex flex-column gap-2 p-0 m-0">
-            <li *ngFor="let item of listTargetB.items" class="p-2 border-round shadow-1" 
-                pDroppable 
-                (onDrop)="drop(listTargetB.id, item, listTemp)" 
-                pDraggable
-                (onDragStart)="dragStart(item,listTargetB.id)"
-                (onDragEnd)="dragEnd()">
-                {{item.name}}
-            </li>
-            <li *ngIf="listTargetB.items.length <= 3" (onDrop)="drop(listTargetB.id, null, listTemp)" pDroppable>
-                Thêm thông tin
-            </li>
-        </ul>
-    </div>
+
 </div>
