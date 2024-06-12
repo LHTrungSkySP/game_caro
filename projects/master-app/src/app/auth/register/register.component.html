@@ -4,7 +4,6 @@
         <div class="flex flex-column align-items-center gap-4">
             <div class="mb-3">
                 <h2>Đăng ký</h2>
-                <p class="text-center">Bắt đầu cùng chúng tôi </p>
             </div>
             <!-- infor 1  -->
             <span class="p-input-icon-left w-full md:w-25rem">
@@ -28,10 +27,11 @@
                 <p-password styleClass="p-input-icon-left w-full" inputStyleClass="w-full"    
                  placeholder="Nhập lại mật khẩu" [(ngModel)]="passwordComfirm" [toggleMask]="true" />
             </span>
-            <div class="w-20rem flex justify-content-end">
-                <a href="" class="text-primary hover:underline cursor-pointer font-medium">
-                    Đăng ký
-                </a>
+            <div class="w-full md:w-25rem flex justify-content-end">
+                <p>Bạn đã có tài khoản? 
+                    <a href="auth/login" class="text-primary hover:underline cursor-pointer font-medium">Đăng nhập </a>
+                    để bắt đầu cùng chúng tôi
+                </p>                
             </div>
             <p-button class="w-20rem" label="Đăng nhập"></p-button>
         </div>

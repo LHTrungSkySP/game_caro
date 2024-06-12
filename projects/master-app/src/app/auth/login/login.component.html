@@ -2,38 +2,22 @@
     <div class="w-full lg:w-4 h-full text-center px-6 py-6 flex flex-column justify-content-between">
         <div class="h-10rem"></div>
         <div class="flex flex-column align-items-center gap-4">
-            <div class="mb-3">
-                <h2>Đăng ký</h2>
-                <p class="text-center">Bắt đầu cùng chúng tôi </p>
+            <div>
+                <h2>Đăng nhập</h2>
+                <p>Nếu bạn chưa có tài khoản vui lòng
+                    <a href="auth/register" class="text-primary hover:underline cursor-pointer font-medium">
+                        Tạo tài khoản
+                    </a>
+                </p>
             </div>
-            <!-- infor 1  -->
-            <span class="p-input-icon-left w-full md:w-25rem">
-                <i class="pi pi-user"></i>
-                <input type="text" pInputText placeholder="Tên đăng nhập" class="w-full">
-            </span>
-            <!-- infor 2  -->
-            <span class="p-input-icon-left w-full md:w-25rem">
-                <i class="pi pi-envelope"></i>
-                <input type="email" pInputText placeholder="Email" class="w-full ">
-            </span>
-            <!-- infor 3  -->
-            <span class="p-input-icon-left w-full md:w-25rem">
-                <i class="pi pi-lock z-2"></i>
-                <p-password styleClass="p-input-icon-left w-full" inputStyleClass="w-full"    
-                 placeholder="Mật khẩu" [(ngModel)]="password" [toggleMask]="true" />
-            </span>
-            <!-- infor 4  -->
-            <span class="p-input-icon-left w-full md:w-25rem">
-                <i class="pi pi-lock z-2"></i>
-                <p-password styleClass="p-input-icon-left w-full" inputStyleClass="w-full"    
-                 placeholder="Nhập lại mật khẩu" [(ngModel)]="passwordComfirm" [toggleMask]="true" />
-            </span>
-            <div class="w-20rem flex justify-content-end">
-                <a href="" class="text-primary hover:underline cursor-pointer font-medium">
-                    Đăng ký
+            <input class="w-full md:w-25rem border-round " pInputText type="email" placeholder="Email">
+            <input class="w-full md:w-25rem" pInputText type="password" placeholder="Mật khẩu">
+            <div class="w-full md:w-25rem flex justify-content-end">
+                <a href="auth/forgot-password" class="text-primary hover:underline cursor-pointer font-medium">
+                    Quên mật khẩu
                 </a>
             </div>
-            <p-button class="w-20rem" label="Đăng nhập"></p-button>
+            <p-button class="w-full md:w-25rem" label="Đăng nhập"></p-button>
         </div>
         <p class="text-color-secondary font-semibold">
             Nếu có vấn đề xảy ra,
@@ -69,5 +53,4 @@
             <i class="pi pi-twitter text-3xl p-1 surface-overlay border-circle cursor-pointer"></i>
         </div>
     </div>
-
 </div>

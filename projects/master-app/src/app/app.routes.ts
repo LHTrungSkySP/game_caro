@@ -1,13 +1,13 @@
-import { loadRemoteEntry, loadRemoteModule } from '@angular-architects/module-federation';
+import { loadRemoteModule } from '@angular-architects/module-federation';
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     
     {
-        path: 'login',
-        component: LoginComponent
+        path: 'auth',
+        loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
     },
+
     {
         path: 'admin',
         loadChildren: () => loadRemoteModule({
