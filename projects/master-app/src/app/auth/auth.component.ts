@@ -4,8 +4,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
-  standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })

@@ -4,18 +4,11 @@
         <div class="flex flex-column align-items-center gap-4">
             <div class="flex flex-column align-items-center gap-4">
                 <div>
-                    <h2>Cài đặt lại mật khẩu</h2>
+                    <h2>Xác minh OTP</h2>
                 </div>
-                <span class="p-input-icon-left w-full md:w-25rem">
-                    <i class="pi pi-lock z-2"></i>
-                    <p-password styleClass="p-input-icon-left w-full" inputStyleClass="w-full"    
-                     placeholder="Mật khẩu" [(ngModel)]="password" [toggleMask]="true" />
-                </span>
-                <!-- infor 4  -->
-                <span class="p-input-icon-left w-full md:w-25rem">
-                    <i class="pi pi-lock z-2"></i>
-                    <p-password styleClass="p-input-icon-left w-full" inputStyleClass="w-full"    
-                     placeholder="Xác nhận mật khẩu" [(ngModel)]="passwordComfirm" [toggleMask]="true" />
+                <span class="w-full md:w-25rem">
+                    <p class="w-full my-3">Nhập mã được cấp trong email</p>
+                    <p-inputOtp class="justify-content-center" [(ngModel)]="opt" [integerOnly]="true" />
                 </span>
                 <div class="flex gap-3 w-full md:w-25rem">
                     <button pButton label="CANCEL" (click)="backToURL()"

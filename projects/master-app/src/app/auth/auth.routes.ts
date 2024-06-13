@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { RegisterComponent } from './register/register.component';
 import { DeniedAccessComponent } from './denied-access/denied-access.component';
+import { OTPComponent } from './otp/otp.component';
 
 export const routes: Routes = [
   {
@@ -26,5 +27,9 @@ export const routes: Routes = [
   {
     path: "denied-access",
     component: DeniedAccessComponent
+  },
+  {
+    path: "otp",
+    component: OTPComponent
   },
 ];
